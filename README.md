@@ -22,11 +22,10 @@ Tecnologias Utilizadas
 
 O MyBank App será desenvolvido utilizando as mais recentes tecnologias de desenvolvimento móvel. O aplicativo será construído para plataformas iOS e Android, aproveitando frameworks nativos e práticas recomendadas de design de interface do usuário.
 
-    Linguagem de Programação: Swift para iOS e Kotlin para Android.
-    Autenticação e Segurança: Integração de biometria, criptografia de dados e práticas de segurança recomendadas.
+    Linguagem de Programação: Dart com framework Dart.
+    Autenticação e Segurança: Usuário e senha.
     Armazenamento de Dados: Utilização de um banco de dados seguro para armazenamento de informações do usuário.
     Integração de Pagamentos: Integração de APIs de pagamento para processar transações de forma segura.
-    Notificações: Implementação de serviços de notificação push para manter os usuários informados.
 
 Próximos Passos
 
