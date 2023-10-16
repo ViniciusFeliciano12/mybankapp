@@ -1,28 +1,22 @@
+
+using Microsoft.AspNetCore.Cors;
 using BankAPI.Data;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>();
 
-
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAnyOrigin", builder =>
-    {
-        builder.AllowAnyOrigin()
-               .AllowAnyMethod()
-               .AllowAnyHeader();
-    });
-});
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
+builder.Services.AddCors(p => p.AddPolicy("corspolicy", build => {
+    build.WithOrigins("http://localhost:5041").WithOrigins("https://localhost:7090").AllowAnyMethod().AllowAnyHeader();
+}));
 
-app.UseCors("AllowAnyOrigin");
+var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
@@ -30,6 +24,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+app.UseCors("corspolicy");
 app.UseHttpsRedirection();
 app.MapControllers();
 

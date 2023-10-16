@@ -2,6 +2,7 @@ using BankAPI.Models;
 using BankAPI.Data;
 using Microsoft.AspNetCore.Mvc;
 using BankAPI.DTO;
+using Microsoft.AspNetCore.Cors;
 
 namespace Events.API.Controllers
 {
@@ -10,7 +11,9 @@ namespace Events.API.Controllers
     public class ContaController : ControllerBase
     {
         [HttpGet]
+        [EnableCors("Policy1")]
         [Route("/contas")]
+        
         public IActionResult Get(
             [FromServices] AppDbContext context)
         {
@@ -18,12 +21,12 @@ namespace Events.API.Controllers
         }
 
         [HttpGet]
-        [Route("/contas/{id:int}")]
+        [Route("/contas/{name}/{password}")]        
         public IActionResult Get(
-            [FromRoute] int id,
+            [FromRoute] string name, string password,
             [FromServices] AppDbContext context)
         {
-            var contasModel = context.Contas!.FirstOrDefault(x => x.ID == id);
+            var contasModel = context.Contas!.FirstOrDefault(x => x.NomeUsuario == name && x.Senha == password);
             if (contasModel == null){
                 return NotFound();
             }
@@ -31,12 +34,14 @@ namespace Events.API.Controllers
         }
 
         [HttpPost("/contas")]
+        [EnableCors("Policy1")]
+
         public IActionResult Post([FromBody] ContaEntradaDTO contaModel, [FromServices] AppDbContext context){
             var model = context.Contas!.ToList();
 
             ContaModel conta = new ContaModel
             {
-                ID = model.Count > 0 ? model.Last().ID++ : 0,
+                ID = model.Count > 0 ? model.Last().ID + 1 : 0,
                 NomeUsuario = contaModel.NomeUsuario,
                 Senha = contaModel.Senha
             };

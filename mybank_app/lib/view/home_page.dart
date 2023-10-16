@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mybank_app/models/logged_user_dto.dart';
+
+import '../services/interfaces/irest_service.dart';
+import '../services/service_locator.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -10,11 +14,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  void _incrementCounter() {
+  final IRestService _restService = getIt<IRestService>();
+  LoggedUserDto? usuario = null;
+
+  @override
+  void initState() {
     setState(() {
-      _counter++;
+      usuario = _restService.getUserLogged();
     });
+    super.initState();
   }
 
   @override
@@ -27,18 +35,13 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            Text(usuario == null ? "null" : usuario?.username ?? "null"),
+            Text(usuario == null ? "null" : usuario?.password ?? "null"),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () {},
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

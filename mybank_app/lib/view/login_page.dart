@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mybank_app/services/rest_service.dart';
+import 'package:mybank_app/view/home_page.dart';
 import 'package:mybank_app/view/register_page.dart';
+
+import '../services/interfaces/irest_service.dart';
+import '../services/service_locator.dart';
+import '../utils/navigation.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.title});
@@ -11,6 +17,27 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final userController = TextEditingController();
+  final passwordController = TextEditingController();
+  final IRestService _restService = getIt<IRestService>();
+
+  void _performLogin(BuildContext context) async {
+    final isValidUser = await _restService.loginAsync(
+      userController.text,
+      passwordController.text,
+    );
+
+    if (isValidUser) {
+      navigateWithSlideTransition(
+        context,
+        const MyHomePage(title: "logado"),
+      );
+      print("logado");
+    } else {
+      print("usuario invalido");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,46 +54,27 @@ class _LoginPageState extends State<LoginPage> {
                 'Usuário: ',
               ),
               const SizedBox(height: 3),
-              const TextField(),
+              TextField(
+                controller: userController,
+              ),
               const SizedBox(height: 19),
               const Text('Senha: '),
               const SizedBox(height: 3),
-              const TextField(),
+              TextField(controller: passwordController),
               const SizedBox(height: 10),
-              ElevatedButton(onPressed: () {}, child: const Text('Login')),
               ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            const RegisterPage(),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          var begin = const Offset(1.0, 0.0);
-                          var end = Offset.zero;
-                          var curve = Curves.ease;
-
-                          var tween = Tween(begin: begin, end: end)
-                              .chain(CurveTween(curve: curve));
-
-                          return SlideTransition(
-                            position: animation.drive(tween),
-                            child: child,
-                          );
-                        },
-                      ),
-                    );
+                    _performLogin(context);
+                  },
+                  child: const Text('Login')),
+              ElevatedButton(
+                  onPressed: () {
+                    navigateWithSlideTransition(context, const RegisterPage());
                   },
                   child: const Text('Register')),
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }
