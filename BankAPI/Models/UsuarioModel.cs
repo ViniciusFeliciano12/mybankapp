@@ -7,6 +7,7 @@ namespace BankAPI.Models
         public string? Nome { get; set; }
         public string? Sobrenome { get; set; }
         public float? Dinheiro { get; set; }
-        public int? CartaoID { get; set; }
+        public CartaoModel? Cartao { get; set; }
+
     }
 }

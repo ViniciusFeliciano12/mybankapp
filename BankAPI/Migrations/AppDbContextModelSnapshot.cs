@@ -43,7 +43,7 @@ namespace BankAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Seila")
+                    b.Property<string>("NomeUsuario")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Senha")
@@ -129,6 +129,8 @@ namespace BankAPI.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("CartaoID");
+
                     b.ToTable("Usuarios");
                 });
 
@@ -153,6 +155,15 @@ namespace BankAPI.Migrations
                     b.HasOne("BankAPI.Models.FaturaModel", null)
                         .WithMany("Transacoes")
                         .HasForeignKey("FaturaModelID");
+                });
+
+            modelBuilder.Entity("BankAPI.Models.UsuarioModel", b =>
+                {
+                    b.HasOne("BankAPI.Models.CartaoModel", "Cartao")
+                        .WithMany()
+                        .HasForeignKey("CartaoID");
+
+                    b.Navigation("Cartao");
                 });
 
             modelBuilder.Entity("BankAPI.Models.CartaoModel", b =>

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\repositorios_gitHub\\bancoapp\\bankapi\\BankAPI.csproj": {}
+    "C:\\repositorios_gitHub\\bancoapp\\BankAPI\\BankAPI.csproj": {}
   },
   "projects": {
-    "C:\\repositorios_gitHub\\bancoapp\\bankapi\\BankAPI.csproj": {
+    "C:\\repositorios_gitHub\\bancoapp\\BankAPI\\BankAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\repositorios_gitHub\\bancoapp\\bankapi\\BankAPI.csproj",
+        "projectUniqueName": "C:\\repositorios_gitHub\\bancoapp\\BankAPI\\BankAPI.csproj",
         "projectName": "BankAPI",
-        "projectPath": "C:\\repositorios_gitHub\\bancoapp\\bankapi\\BankAPI.csproj",
+        "projectPath": "C:\\repositorios_gitHub\\bancoapp\\BankAPI\\BankAPI.csproj",
         "packagesPath": "C:\\Nuget",
-        "outputPath": "C:\\repositorios_gitHub\\bancoapp\\bankapi\\obj\\",
+        "outputPath": "C:\\repositorios_gitHub\\bancoapp\\BankAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

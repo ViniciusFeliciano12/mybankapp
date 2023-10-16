@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "D+lzXG/hAs13hJ5l+UlV5ZbG/2yGHKzfXRcp6HC9FUYCBG9R516HDjuydSGEuuOjW88+rhpGjsFwi3JoCwV9hA==",
+  "dgSpecHash": "4fk2aH7qTNTF2o9yyTxGfcMMFX0CN8zgsIdBSdOONMOpc50KtAjU91QoEX5VPg5bcJ/+POrvdhcWwxNTzhmrYQ==",
   "success": true,
-  "projectFilePath": "C:\\repositorios_gitHub\\bancoapp\\bankapi\\BankAPI.csproj",
+  "projectFilePath": "C:\\repositorios_gitHub\\bancoapp\\BankAPI\\BankAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Nuget\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Nuget\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
