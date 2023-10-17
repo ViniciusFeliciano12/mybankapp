@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mybank_app/services/rest_service.dart';
+import 'package:mybank_app/utils/single_response_message.dart';
 import 'package:mybank_app/view/home_page.dart';
 import 'package:mybank_app/view/register_page.dart';
 
@@ -27,14 +27,16 @@ class _LoginPageState extends State<LoginPage> {
       passwordController.text,
     );
 
+    if (!context.mounted) return;
+
     if (isValidUser) {
       navigateWithSlideTransition(
         context,
         const MyHomePage(title: "logado"),
       );
-      print("logado");
+      debugPrint("logado");
     } else {
-      print("usuario invalido");
+      singleResponseMessage(context, "erro", "erro no login");
     }
   }
 

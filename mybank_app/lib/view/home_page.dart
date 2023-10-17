@@ -15,12 +15,15 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final IRestService _restService = getIt<IRestService>();
-  LoggedUserDto? usuario = null;
+  LoggedUserDto? usuario;
 
   @override
   void initState() {
     setState(() {
-      usuario = _restService.getUserLogged();
+      usuario = _restService.getLoggedInfo();
+      if (usuario?.usuario == null) {
+        debugPrint("nulo");
+      }
     });
     super.initState();
   }

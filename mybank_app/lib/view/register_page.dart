@@ -1,7 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:mybank_app/services/service_locator.dart';
+import 'package:mybank_app/utils/single_response_message.dart';
+import '../services/interfaces/irest_service.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -13,6 +13,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final userController = TextEditingController();
   final passwordController = TextEditingController();
+  final IRestService _restService = getIt<IRestService>();
 
   @override
   Widget build(BuildContext context) {
@@ -42,30 +43,15 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: 10),
               ElevatedButton(
                   onPressed: () async {
-                    String url = "http://192.168.100.14:5041/contas";
-                    Map<String, String> data = {
-                      'nomeUsuario': userController.text,
-                      'senha': passwordController.text,
-                    };
-
-                    try {
-                      var response = await http.post(
-                        Uri.parse(url),
-                        headers: <String, String>{
-                          'Content-Type': 'application/json; charset=UTF-8',
-                        },
-                        body: jsonEncode(
-                            data), // Converte o mapa em uma string JSON
-                      );
-
-                      if (response.statusCode == 201) {
-                        // Manipule a resposta aqui.
-                      } else {
-                        print('Erro: ${response.reasonPhrase}');
-                      }
-                    } catch (exception) {
-                      print('Exceção: $exception');
+                    var registerSuccess = await _restService.registerAsync(
+                        userController.text, passwordController.text);
+                    if (!context.mounted) return;
+                    if (registerSuccess) {
+                      Navigator.pop(context);
+                      return;
                     }
+                    singleResponseMessage(
+                        context, "erro", "falha no registro, tente novamente");
                   },
                   child: const Text('Registrar')),
             ],
