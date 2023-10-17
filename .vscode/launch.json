@@ -11,7 +11,10 @@
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/BankAPI/bin/Debug/net7.0/BankAPI.dll",
-            "args": [],
+            "args": [
+                "--dart-define-from-file",
+                "env.json"
+            ],
             "cwd": "${workspaceFolder}/BankAPI",
             "stopAtEntry": false,
             // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
@@ -30,6 +33,16 @@
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach"
+        },
+        {
+            "name": "Flutter app",
+            "request": "launch",
+            "type": "dart",
+            "program" : "${workspaceFolder}/bancoapp/mybank_app/lib/main.dart",
+            "args":[
+                "--dart-define-from-file",
+                "env.json"
+            ]
         }
     ]
 }

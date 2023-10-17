@@ -3,6 +3,7 @@ using BankAPI.Data;
 using Microsoft.AspNetCore.Mvc;
 using BankAPI.DTO;
 using Microsoft.AspNetCore.Cors;
+using MyBank.DTO;
 
 namespace Events.API.Controllers
 {
@@ -20,13 +21,16 @@ namespace Events.API.Controllers
             return Ok(context.Contas!.ToList());
         }
 
-        [HttpGet]
-        [Route("/contas/{name}/{password}")]        
-        public IActionResult Get(
-            [FromRoute] string name, string password,
+        [HttpPost]
+        [Route("/loginAsync")]        
+        public IActionResult LoginAsync(
+            [FromBody] LoginAsyncDTO User,
             [FromServices] AppDbContext context)
         {
-            var contasModel = context.Contas!.FirstOrDefault(x => x.NomeUsuario == name && x.Senha == password);
+            var contasModel = context.Contas!.
+            FirstOrDefault(x => x.NomeUsuario == User.Name 
+            && x.Senha == User.Password);
+
             if (contasModel == null){
                 return NotFound();
             }
