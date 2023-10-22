@@ -37,11 +37,17 @@ namespace Events.API.Controllers
             return Ok(contasModel);
         }
 
-        [HttpPost("/contas")]
+        [HttpPost("/registerAsync")]
         [EnableCors("Policy1")]
 
-        public IActionResult Post([FromBody] ContaEntradaDTO contaModel, [FromServices] AppDbContext context){
+        public IActionResult RegisterAsync([FromBody] ContaEntradaDTO contaModel, [FromServices] AppDbContext context){
             var model = context.Contas!.ToList();
+
+            foreach(var contas in model){
+                if (contas.NomeUsuario == contaModel.NomeUsuario){
+                    return Conflict("Nome de usuário já registrado");
+                }
+            }
 
             ContaModel conta = new ContaModel
             {

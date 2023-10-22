@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:mybank_app/models/logged_user_dto.dart';
+import 'package:mybank_app/models/responseDTO.dart';
 import 'package:mybank_app/services/interfaces/irest_service.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,7 +24,7 @@ class RestService extends IRestService {
   static String get apiEndpoint => _getKey('API_ENDPOINT');
 
   @override
-  Future<bool> loginAsync(String user, String password) async {
+  Future<ResponseDTO> loginAsync(String user, String password) async {
     Map<String, String> data = {
       'name': user,
       'password': password,
@@ -42,19 +43,19 @@ class RestService extends IRestService {
       if (response.statusCode == 200) {
         final dynamic jsonResponse = jsonDecode(response.body);
         usuario = LoggedUserDto.fromJson(jsonResponse);
-        return true;
+        return ResponseDTO(success: true);
       } else {
         debugPrint('Erro: ${response.reasonPhrase}');
-        return false;
+        return ResponseDTO(success: false, message: response.body);
       }
     } catch (exception) {
       debugPrint('Exceção: $exception');
-      return false;
+      return ResponseDTO(success: false, message: exception.toString());
     }
   }
 
   @override
-  Future<bool> registerAsync(String user, String password) async {
+  Future<ResponseDTO> registerAsync(String user, String password) async {
     Map<String, String> data = {
       'nomeUsuario': user,
       'senha': password,
@@ -62,7 +63,7 @@ class RestService extends IRestService {
 
     try {
       var response = await http.post(
-        Uri.parse("$apiEndpoint/contas"),
+        Uri.parse("$apiEndpoint/registerAsync"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -70,14 +71,14 @@ class RestService extends IRestService {
       );
 
       if (response.statusCode == 201) {
-        return true;
+        return ResponseDTO(success: true);
       } else {
-        debugPrint('Erro: ${response.reasonPhrase}');
-        return false;
+        debugPrint('Erro: ${response.body}');
+        return ResponseDTO(success: false, message: response.body);
       }
     } catch (exception) {
       debugPrint('Exceção: $exception');
-      return false;
+      return ResponseDTO(success: false, message: exception.toString());
     }
   }
 

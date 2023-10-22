@@ -23,15 +23,14 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
             return;
           }
 
-          if (response) {
+          if (response.success) {
             Navigator.pop(event.context);
             return;
+          } else {
+            singleResponseMessage(event.context, "Erro", response.message!);
           }
-          singleResponseMessage(
-              event.context, "erro", "falha no registro, tente novamente");
         } catch (error) {
-          singleResponseMessage(
-              event.context, "erro", "falha no registro, tente novamente");
+          singleResponseMessage(event.context, "Erro", error.toString());
         }
       },
     );

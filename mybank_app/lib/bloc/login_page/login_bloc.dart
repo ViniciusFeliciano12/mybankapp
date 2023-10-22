@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:bloc/bloc.dart';
 import 'package:mybank_app/bloc/login_page/login_event.dart';
 import 'package:mybank_app/bloc/login_page/login_state.dart';
@@ -23,18 +25,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             return;
           }
 
-          if (response) {
-            // ignore: use_build_context_synchronously
+          if (response.success) {
             navigateWithSlideTransition(
               event.context,
               const MyHomePage(title: "logado"),
             );
           } else {
-            // ignore: use_build_context_synchronously
-            singleResponseMessage(event.context, "erro", "erro no login");
+            singleResponseMessage(event.context, "Erro", response.message!);
           }
         } catch (error) {
-          singleResponseMessage(event.context, "erro", "erro no login");
+          singleResponseMessage(event.context, "Erro", error.toString());
         }
       },
     );
