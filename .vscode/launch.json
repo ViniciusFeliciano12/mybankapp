@@ -38,10 +38,10 @@
             "name": "Flutter app",
             "request": "launch",
             "type": "dart",
-            "program" : "${workspaceFolder}/bancoapp/mybank_app/lib/main.dart",
+            "program" : "${workspaceFolder}/mybank_app/lib/main.dart",
             "args":[
                 "--dart-define-from-file",
-                "env.json"
+                ".env.json"
             ]
         }
     ]

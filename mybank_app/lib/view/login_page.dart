@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mybank_app/utils/single_response_message.dart';
-import 'package:mybank_app/view/home_page.dart';
-import 'package:mybank_app/view/register_page.dart';
-
-import '../services/interfaces/irest_service.dart';
-import '../services/service_locator.dart';
-import '../utils/navigation.dart';
+import 'package:mybank_app/bloc/login_page/login_bloc.dart';
+import 'package:mybank_app/bloc/login_page/login_event.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.title});
@@ -19,25 +14,12 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final userController = TextEditingController();
   final passwordController = TextEditingController();
-  final IRestService _restService = getIt<IRestService>();
+  late final LoginBloc bloc;
 
-  void _performLogin(BuildContext context) async {
-    final isValidUser = await _restService.loginAsync(
-      userController.text,
-      passwordController.text,
-    );
-
-    if (!context.mounted) return;
-
-    if (isValidUser) {
-      navigateWithSlideTransition(
-        context,
-        const MyHomePage(title: "logado"),
-      );
-      debugPrint("logado");
-    } else {
-      singleResponseMessage(context, "erro", "erro no login");
-    }
+  @override
+  void initState() {
+    super.initState();
+    bloc = LoginBloc();
   }
 
   @override
@@ -62,16 +44,19 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 19),
               const Text('Senha: '),
               const SizedBox(height: 3),
-              TextField(controller: passwordController),
+              TextField(controller: passwordController, obscureText: true),
               const SizedBox(height: 10),
               ElevatedButton(
                   onPressed: () {
-                    _performLogin(context);
+                    bloc.add(TryLoginEvent(
+                        context: context,
+                        username: userController.text,
+                        password: passwordController.text));
                   },
                   child: const Text('Login')),
               ElevatedButton(
                   onPressed: () {
-                    navigateWithSlideTransition(context, const RegisterPage());
+                    bloc.add(GoToRegisterEvent(context: context));
                   },
                   child: const Text('Register')),
             ],

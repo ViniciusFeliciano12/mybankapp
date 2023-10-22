@@ -25,8 +25,8 @@ class RestService extends IRestService {
   @override
   Future<bool> loginAsync(String user, String password) async {
     Map<String, String> data = {
-      'nomeUsuario': user,
-      'senha': password,
+      'name': user,
+      'password': password,
     };
 
     try {

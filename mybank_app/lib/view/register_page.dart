@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mybank_app/services/service_locator.dart';
-import 'package:mybank_app/utils/single_response_message.dart';
-import '../services/interfaces/irest_service.dart';
+import 'package:mybank_app/bloc/register_page/register_bloc.dart';
+import 'package:mybank_app/bloc/register_page/register_event.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -13,7 +12,13 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final userController = TextEditingController();
   final passwordController = TextEditingController();
-  final IRestService _restService = getIt<IRestService>();
+  late final RegisterBloc bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    bloc = RegisterBloc();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,15 +48,10 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: 10),
               ElevatedButton(
                   onPressed: () async {
-                    var registerSuccess = await _restService.registerAsync(
-                        userController.text, passwordController.text);
-                    if (!context.mounted) return;
-                    if (registerSuccess) {
-                      Navigator.pop(context);
-                      return;
-                    }
-                    singleResponseMessage(
-                        context, "erro", "falha no registro, tente novamente");
+                    bloc.add(TryRegisterEvent(
+                        context: context,
+                        username: userController.text,
+                        password: passwordController.text));
                   },
                   child: const Text('Registrar')),
             ],
