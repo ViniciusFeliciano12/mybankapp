@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:mybank_app/models/logged_user_dto.dart';
-import 'package:mybank_app/models/responseDTO.dart';
+import 'package:mybank_app/models/response_dto.dart';
 import 'package:mybank_app/services/interfaces/irest_service.dart';
 import 'package:http/http.dart' as http;
 

@@ -1,5 +1,5 @@
 import 'package:mybank_app/models/logged_user_dto.dart';
-import 'package:mybank_app/models/responseDTO.dart';
+import 'package:mybank_app/models/response_dto.dart';
 
 abstract class IRestService {
   //login and register

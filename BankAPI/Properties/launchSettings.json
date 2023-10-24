@@ -3,16 +3,37 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://192.168.100.14:57566",
+      "applicationUrl": "http://192.168.0.6:57566",
       "sslPort": 44385
     }
   },
   "profiles": {
-    "http": {
+    "house": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
+      "launchUrl": "swagger",
       "applicationUrl": "http://192.168.100.14:5041",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "trend": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchUrl": "swagger",
+      "launchBrowser": true,
+      "applicationUrl": "http://192.168.0.6:5041",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "utfpr": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "http://192.168.0.6:5041",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -21,7 +42,8 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "https://192.168.100.147090;http://192.168.100.14:5041",
+      "launchUrl": "swagger",
+      "applicationUrl": "https://192.168.0.6:7090;http://192.168.0.6:5041",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mybank_app/bloc/login_page/login_event.dart';
 import 'package:mybank_app/bloc/login_page/login_state.dart';
 import 'package:mybank_app/utils/navigation.dart';
