@@ -12,7 +12,6 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "swagger",
       "applicationUrl": "http://192.168.100.14:5041",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -21,7 +20,6 @@
     "trend": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchUrl": "swagger",
       "launchBrowser": true,
       "applicationUrl": "http://192.168.0.6:5041",
       "environmentVariables": {
@@ -32,8 +30,7 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "swagger",
-      "applicationUrl": "http://192.168.0.6:5041",
+      "applicationUrl": "http://10.51.226.220:5041",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -42,8 +39,7 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "swagger",
-      "applicationUrl": "https://192.168.0.6:7090;http://192.168.0.6:5041",
+      "applicationUrl": "https://0.0.0.0:7090;http://0.0.0.0:5041",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

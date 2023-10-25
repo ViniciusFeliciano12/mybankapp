@@ -1,15 +1,67 @@
 {
     "version": "0.2.0",
+    "compounds": [
+        {
+            "name": "Server/Client - UTFPR",
+            "configurations": ["API UTFPR", "BankAPP-utfpr"]
+        },
+        {
+            "name": "Server/Client - Home",
+            "configurations": ["API home", "BankAPP-house"]
+        },
+        {
+            "name": "Server/Client - Trend",
+            "configurations": ["API trend", "BankAPP-trend"]
+        },
+    ],
     "configurations": [
         {
-            "name": ".NET Core Launch (web)",
+            "name": "API UTFPR",
+            "type": "coreclr",
+            "launchSettingsProfile": "utfpr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/BankAPI/bin/Debug/net7.0/BankAPI.dll",
+            "cwd": "${workspaceFolder}/BankAPI",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": "API home",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/BankAPI/bin/Debug/net7.0/BankAPI.dll",
-            "args": [
-                "--launch-profile trend",
-            ],
+            "launchSettingsProfile": "house",
+            "cwd": "${workspaceFolder}/BankAPI",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": "API trend",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/BankAPI/bin/Debug/net7.0/BankAPI.dll",
+            "launchSettingsProfile": "trend",
             "cwd": "${workspaceFolder}/BankAPI",
             "stopAtEntry": false,
             "serverReadyAction": {
@@ -30,7 +82,7 @@
             "program" : "${workspaceFolder}/mybank_app/lib/main.dart",
             "args":[
                 "--dart-define-from-file",
-                ".env-house.json"
+                ".env-home.json"
             ]
         },
         {

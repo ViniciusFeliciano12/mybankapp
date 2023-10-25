@@ -1,13 +1,13 @@
 import 'package:flutter/widgets.dart';
 
+import '../../models/usuario.dart';
+
 abstract class HomePageEvent {}
 
-class TryLoginEvent extends HomePageEvent {
+class VerifyUserEvent extends HomePageEvent {
   BuildContext context;
-  String username;
-  String password;
-  TryLoginEvent(
-      {required this.context, required this.username, required this.password});
+  Usuario? user;
+  VerifyUserEvent({required this.context, this.user});
 }
 
 class GoToRegisterEvent extends HomePageEvent {

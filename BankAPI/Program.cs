@@ -20,20 +20,20 @@ builder.Services.AddCors(p => p.AddPolicy("corspolicy", build => {
 }));
 
 var app = builder.Build();
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "Minha API V1");
+        c.RoutePrefix = string.Empty;
     });
 }
 
 
 
 app.UseCors("corspolicy");
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.MapControllers();
 
 app.Run();

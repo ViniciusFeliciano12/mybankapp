@@ -9,6 +9,8 @@
 .history
 .svn/
 .env.json
+.env-utfpr.json
+.env-home.json
 migrate_working_dir/
 
 # IntelliJ related
