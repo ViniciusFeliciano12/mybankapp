@@ -14,6 +14,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final userController = TextEditingController();
   final passwordController = TextEditingController();
+  bool passwordObscure = true;
+
   late final LoginBloc bloc;
 
   @override
@@ -25,40 +27,82 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: SingleChildScrollView(
+          child: Stack(clipBehavior: Clip.hardEdge, children: [
+            Image.asset("assets/background.jpg"),
+            _body(context),
+          ]),
+        ));
+  }
+
+  Center _body(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 200, left: 50),
         child: SizedBox(
           height: 260,
-          width: 200,
+          width: 250,
           child: Column(
             children: <Widget>[
-              const Text(
-                'Usuário: ',
+              const Padding(
+                padding: EdgeInsets.only(right: 50),
+                child: Text('Usuário '),
               ),
               const SizedBox(height: 3),
-              TextField(
-                controller: userController,
+              Padding(
+                padding: const EdgeInsets.only(right: 50),
+                child: TextField(
+                  controller: userController,
+                ),
               ),
               const SizedBox(height: 19),
-              const Text('Senha: '),
+              const Padding(
+                padding: EdgeInsets.only(right: 50),
+                child: Text('Senha: '),
+              ),
               const SizedBox(height: 3),
-              TextField(controller: passwordController, obscureText: true),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: passwordController,
+                      obscureText: passwordObscure,
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          passwordObscure = !passwordObscure;
+                        });
+                      },
+                      icon: const Icon(Icons.remove_red_eye_outlined))
+                ],
+              ),
               const SizedBox(height: 10),
-              ElevatedButton(
-                  onPressed: () {
-                    bloc.add(TryLoginEvent(
-                        context: context,
-                        username: userController.text,
-                        password: passwordController.text));
-                  },
-                  child: const Text('Login')),
-              ElevatedButton(
-                  onPressed: () {
-                    bloc.add(GoToRegisterEvent(context: context));
-                  },
-                  child: const Text('Register')),
+              Padding(
+                padding: const EdgeInsets.only(right: 50),
+                child: ElevatedButton(
+                    onPressed: () {
+                      bloc.add(TryLoginEvent(
+                          context: context,
+                          username: userController.text,
+                          password: passwordController.text));
+                      userController.clear();
+                      passwordController.clear();
+                    },
+                    child: const Text('Login')),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 50),
+                child: ElevatedButton(
+                    onPressed: () {
+                      bloc.add(GoToRegisterEvent(context: context));
+                    },
+                    child: const Text('Register')),
+              ),
             ],
           ),
         ),

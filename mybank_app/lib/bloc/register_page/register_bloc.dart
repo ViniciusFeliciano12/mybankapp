@@ -16,6 +16,20 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       (event, emit) async {
         try {
           emit(RegisterInitialState());
+
+          if (event.confirmPassword != event.password) {
+            singleResponseMessage(
+                event.context, "Erro", "Senhas não conferem!");
+            return;
+          }
+
+          if (event.username.isEmpty ||
+              event.confirmPassword.isEmpty ||
+              event.password.isEmpty) {
+            singleResponseMessage(
+                event.context, "Erro", "Campos não podem ficar em branco");
+            return;
+          }
           var response = await _databaseService.registerAsync(
               event.username, event.password);
 

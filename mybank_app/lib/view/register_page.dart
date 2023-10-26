@@ -12,6 +12,10 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final userController = TextEditingController();
   final passwordController = TextEditingController();
+  final passwordConfirmController = TextEditingController();
+  bool passwordObscure = true;
+  bool passwordConfirmObscure = true;
+
   late final RegisterBloc bloc;
 
   @override
@@ -23,37 +27,96 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Register page"),
-      ),
-      body: Center(
+        appBar: AppBar(
+          title: const Text("Register page"),
+        ),
+        body: SingleChildScrollView(
+          child: Stack(children: [
+            Image.asset("assets/background.jpg"),
+            _body(context),
+          ]),
+        ));
+  }
+
+  Center _body(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 200, left: 50),
         child: SizedBox(
-          height: 260,
-          width: 200,
+          height: 400,
+          width: 250,
           child: Column(
             children: <Widget>[
-              const Text(
-                'Usuário: ',
+              const Padding(
+                padding: EdgeInsets.only(right: 50),
+                child: Text('Usuário: '),
               ),
               const SizedBox(height: 3),
-              TextField(
-                controller: userController,
+              Padding(
+                padding: const EdgeInsets.only(right: 50),
+                child: TextField(
+                  controller: userController,
+                ),
               ),
               const SizedBox(height: 19),
-              const Text('Senha: '),
+              const Padding(
+                padding: EdgeInsets.only(right: 50),
+                child: Text('Senha: '),
+              ),
               const SizedBox(height: 3),
-              TextField(
-                controller: passwordController,
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: passwordController,
+                      obscureText: passwordObscure,
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          passwordObscure = !passwordObscure;
+                        });
+                      },
+                      icon: const Icon(Icons.remove_red_eye_outlined))
+                ],
+              ),
+              const SizedBox(height: 19),
+              const Padding(
+                padding: EdgeInsets.only(right: 50),
+                child: Text('Confirme a senha: '),
+              ),
+              const SizedBox(height: 3),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: passwordConfirmController,
+                      obscureText: passwordConfirmObscure,
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          passwordConfirmObscure = !passwordConfirmObscure;
+                        });
+                      },
+                      icon: const Icon(Icons.remove_red_eye_outlined))
+                ],
               ),
               const SizedBox(height: 10),
-              ElevatedButton(
-                  onPressed: () async {
-                    bloc.add(TryRegisterEvent(
-                        context: context,
-                        username: userController.text,
-                        password: passwordController.text));
-                  },
-                  child: const Text('Registrar')),
+              Padding(
+                padding: const EdgeInsets.only(right: 50),
+                child: ElevatedButton(
+                    onPressed: () async {
+                      bloc.add(TryRegisterEvent(
+                          context: context,
+                          username: userController.text,
+                          password: passwordController.text,
+                          confirmPassword: passwordConfirmController.text));
+                    },
+                    child: const Text('Registrar')),
+              ),
             ],
           ),
         ),

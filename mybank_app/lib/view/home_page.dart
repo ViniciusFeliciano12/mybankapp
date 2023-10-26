@@ -8,9 +8,7 @@ import '../services/interfaces/irest_service.dart';
 import '../services/service_locator.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -26,11 +24,11 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     bloc = HomePageBloc();
-
-    bloc.add(VerifyUserEvent(context: context, user: usuario!.usuario));
     setState(() {
       usuario = _restService.getLoggedInfo();
     });
+
+    bloc.add(VerifyUserEvent(context: context, user: usuario!.usuario));
   }
 
   Center _body() {
@@ -48,9 +46,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavDrawer(),
+      drawerEnableOpenDragGesture: true,
+      drawer: NavDrawer(index: 0),
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text("Home page"),
       ),
       body: _body(),
     );

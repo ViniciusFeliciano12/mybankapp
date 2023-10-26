@@ -28,7 +28,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           if (response.success) {
             navigateWithSlideTransition(
               event.context,
-              const MyHomePage(title: "logado"),
+              const MyHomePage(),
             );
           } else {
             singleResponseMessage(event.context, "Erro", response.message!);

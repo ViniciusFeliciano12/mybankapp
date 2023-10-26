@@ -94,7 +94,6 @@
                 "--dart-define-from-file",
                 ".env.json"
             ],
-            
         },
         {
             "name": "BankAPP-utfpr",
