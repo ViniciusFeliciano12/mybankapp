@@ -15,9 +15,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     on<TryRegisterEvent>(
       (event, emit) async {
         try {
-          emit(RegisterInitialState());
+          emit(RegisterLoadingState());
 
           if (event.confirmPassword != event.password) {
+            emit(RegisterInitialState());
             singleResponseMessage(
                 event.context, "Erro", "Senhas não conferem!");
             return;
@@ -26,6 +27,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           if (event.username.isEmpty ||
               event.confirmPassword.isEmpty ||
               event.password.isEmpty) {
+            emit(RegisterInitialState());
             singleResponseMessage(
                 event.context, "Erro", "Campos não podem ficar em branco");
             return;
@@ -34,10 +36,12 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
               event.username, event.password);
 
           if (!event.context.mounted) {
+            emit(RegisterInitialState());
             return;
           }
 
           if (response.success) {
+            emit(RegisterInitialState());
             Navigator.pop(event.context);
             return;
           } else {
@@ -46,6 +50,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         } catch (error) {
           singleResponseMessage(event.context, "Erro", error.toString());
         }
+        emit(RegisterInitialState());
       },
     );
   }

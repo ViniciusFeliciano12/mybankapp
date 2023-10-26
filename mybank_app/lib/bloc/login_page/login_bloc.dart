@@ -17,23 +17,34 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<TryLoginEvent>(
       (event, emit) async {
         try {
-          emit(LoginInitialState());
+          emit(LoginLoadingState());
           var response =
               await _databaseService.loginAsync(event.username, event.password);
 
+          if (event.password.isEmpty || event.username.isEmpty) {
+            emit(LoginInitialState());
+            singleResponseMessage(event.context, "Erro",
+                "Usuário ou senha devem ser preenchidos!");
+            return;
+          }
+
           if (!event.context.mounted) {
+            emit(LoginInitialState());
             return;
           }
 
           if (response.success) {
+            emit(LoginInitialState());
             navigateWithSlideTransition(
               event.context,
               const MyHomePage(),
             );
           } else {
+            emit(LoginInitialState());
             singleResponseMessage(event.context, "Erro", response.message!);
           }
         } catch (error) {
+          emit(LoginInitialState());
           singleResponseMessage(event.context, "Erro", error.toString());
         }
       },

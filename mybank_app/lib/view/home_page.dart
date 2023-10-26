@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mybank_app/bloc/home_page_bloc/home_page_bloc.dart';
 import 'package:mybank_app/bloc/home_page_bloc/home_page_event.dart';
+import 'package:mybank_app/bloc/home_page_bloc/home_page_state.dart';
 import 'package:mybank_app/models/logged_user_dto.dart';
 import 'package:mybank_app/view/nav_drawer.dart';
 
@@ -33,12 +35,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Center _body() {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(usuario == null ? "null" : usuario?.username ?? "null"),
-          Text(usuario == null ? "null" : usuario?.password ?? "null"),
-        ],
+      child: BlocBuilder<HomePageBloc, HomePageState>(
+        bloc: bloc,
+        builder: (context, state) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(usuario == null ? "null" : usuario?.username ?? "null"),
+              Text(usuario == null ? "null" : usuario?.password ?? "null"),
+            ],
+          );
+        },
       ),
     );
   }
@@ -47,6 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawerEnableOpenDragGesture: true,
+      drawerEdgeDragWidth: 50,
       drawer: NavDrawer(index: 0),
       appBar: AppBar(
         title: const Text("Home page"),
