@@ -4,12 +4,11 @@ import 'package:mybank_app/view/home_page.dart';
 import 'package:mybank_app/view/register_page.dart';
 
 class NavDrawer extends StatelessWidget {
-  NavDrawer({super.key, required this.index});
-  int index;
+  const NavDrawer({super.key, required this.index});
+  final int index;
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
