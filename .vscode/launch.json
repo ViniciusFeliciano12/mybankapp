@@ -13,6 +13,10 @@
             "name": "Server/Client - Trend",
             "configurations": ["API trend", "BankAPP-trend"]
         },
+        {
+            "name": "Server/Client - Celular",
+            "configurations": ["API celular", "BankAPP-celular"]
+        },
     ],
     "configurations": [
         {
@@ -76,6 +80,26 @@
             }
         },
         {
+            "name": "API celular",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/BankAPI/bin/Debug/net7.0/BankAPI.dll",
+            "launchSettingsProfile": "celular",
+            "cwd": "${workspaceFolder}/BankAPI",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
             "name": "BankAPP-house",
             "request": "launch",
             "type": "dart",
@@ -103,6 +127,16 @@
             "args":[
                 "--dart-define-from-file",
                 ".env-utfpr.json"
+            ]
+        },
+        {
+            "name": "BankAPP-celular",
+            "request": "launch",
+            "type": "dart",
+            "program" : "${workspaceFolder}/mybank_app/lib/main.dart",
+            "args":[
+                "--dart-define-from-file",
+                ".env-celular.json"
             ]
         }
     ]

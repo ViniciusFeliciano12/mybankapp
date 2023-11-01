@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using BankAPI.DTO;
 using Microsoft.AspNetCore.Cors;
 using MyBank.DTO;
+using Microsoft.EntityFrameworkCore;
 
 namespace Events.API.Controllers
 {
@@ -27,12 +28,12 @@ namespace Events.API.Controllers
             [FromBody] LoginAsyncDTO User,
             [FromServices] AppDbContext context)
         {
-            var contasModel = context.Contas!.
+            var contasModel = context.Contas!.Include(a => a.Usuario).
             FirstOrDefault(x => x.NomeUsuario == User.Name 
             && x.Senha == User.Password);
 
             if (contasModel == null){
-                return NotFound();
+                return NotFound("Usuario ou senha não encontrado");
             }
             return Ok(contasModel);
         }

@@ -18,8 +18,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       (event, emit) async {
         try {
           emit(LoginLoadingState());
-          var response =
-              await _databaseService.loginAsync(event.username, event.password);
 
           if (event.password.isEmpty || event.username.isEmpty) {
             emit(LoginInitialState());
@@ -27,6 +25,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
                 "Usuário ou senha devem ser preenchidos!");
             return;
           }
+
+          var response =
+              await _databaseService.loginAsync(event.username, event.password);
 
           if (!event.context.mounted) {
             emit(LoginInitialState());

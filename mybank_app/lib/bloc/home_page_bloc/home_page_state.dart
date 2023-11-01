@@ -13,3 +13,7 @@ class NoValidUserState extends HomePageState {
 class ValidUserState extends HomePageState {
   ValidUserState() : super();
 }
+
+class HomePageLoadingState extends HomePageState {
+  HomePageLoadingState() : super();
+}

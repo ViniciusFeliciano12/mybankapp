@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231010182109_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20231101031537_initialCreate")]
+    partial class initialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,18 +46,13 @@ namespace BankAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Seila")
+                    b.Property<string>("NomeUsuario")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Senha")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("UsuarioID")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("ID");
-
-                    b.HasIndex("UsuarioID");
 
                     b.ToTable("Contas");
                 });
@@ -112,7 +107,6 @@ namespace BankAPI.Migrations
             modelBuilder.Entity("BankAPI.Models.UsuarioModel", b =>
                 {
                     b.Property<int?>("ID")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("CartaoID")
@@ -120,6 +114,9 @@ namespace BankAPI.Migrations
 
                     b.Property<string>("ChavePIX")
                         .HasColumnType("TEXT");
+
+                    b.Property<int?>("ContaID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<float?>("Dinheiro")
                         .HasColumnType("REAL");
@@ -132,16 +129,11 @@ namespace BankAPI.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("CartaoID");
+
+                    b.HasIndex("ContaID");
+
                     b.ToTable("Usuarios");
-                });
-
-            modelBuilder.Entity("BankAPI.Models.ContaModel", b =>
-                {
-                    b.HasOne("BankAPI.Models.UsuarioModel", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioID");
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("BankAPI.Models.FaturaModel", b =>
@@ -158,9 +150,35 @@ namespace BankAPI.Migrations
                         .HasForeignKey("FaturaModelID");
                 });
 
+            modelBuilder.Entity("BankAPI.Models.UsuarioModel", b =>
+                {
+                    b.HasOne("BankAPI.Models.CartaoModel", "Cartao")
+                        .WithMany()
+                        .HasForeignKey("CartaoID");
+
+                    b.HasOne("BankAPI.Models.ContaModel", "Conta")
+                        .WithMany()
+                        .HasForeignKey("ContaID");
+
+                    b.HasOne("BankAPI.Models.ContaModel", null)
+                        .WithOne("Usuario")
+                        .HasForeignKey("BankAPI.Models.UsuarioModel", "ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cartao");
+
+                    b.Navigation("Conta");
+                });
+
             modelBuilder.Entity("BankAPI.Models.CartaoModel", b =>
                 {
                     b.Navigation("Faturas");
+                });
+
+            modelBuilder.Entity("BankAPI.Models.ContaModel", b =>
+                {
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("BankAPI.Models.FaturaModel", b =>

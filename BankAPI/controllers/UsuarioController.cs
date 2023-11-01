@@ -2,6 +2,8 @@ using BankAPI.Models;
 using BankAPI.Data;
 using Microsoft.AspNetCore.Mvc;
 using BankAPI.DTO;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
 
 namespace Events.API.Controllers
 {
@@ -30,23 +32,43 @@ namespace Events.API.Controllers
             return Ok(usuarioModel);
         }
 
-        [HttpPost("/usuarios")]
-        public IActionResult Post([FromBody] UsuarioEntradaDTO usuarioModel, [FromServices] AppDbContext context){
+        [HttpPost("/gerarUsuarioAsync")]
+        public IActionResult GerarUsuario([FromBody] GerarUsuarioDTO gerarUsuarioDTO,
+        [FromServices] AppDbContext context){
             var model = context.Usuarios!.ToList();
-
             UsuarioModel usuario = new UsuarioModel
             {
-                ID = model.Last().ID++,
-                Cartao = usuarioModel.Cartao,
-                ChavePIX = usuarioModel.ChavePIX,
-                Dinheiro = usuarioModel.Dinheiro,
-                Nome = usuarioModel.Nome,
-                Sobrenome = usuarioModel.Sobrenome
+                ID = model.Count == 0 ? 0 : model.Last().ID+1,
+                Nome = gerarUsuarioDTO.Nome,
+                Sobrenome = gerarUsuarioDTO.Sobrenome,
+                Dinheiro = 0,
+                Cartao = null,
             };
+            usuario.ChavePIX = string.IsNullOrEmpty(gerarUsuarioDTO.ChavePIX) ? usuario.GerarChavePix(10) : gerarUsuarioDTO.ChavePIX;
+            ContaModel? contaReal;
+            try{
+                contaReal = context.Contas!
+                .Where(a => a.ID == gerarUsuarioDTO.ID && a.NomeUsuario == gerarUsuarioDTO.NomeUsuario && a.Senha == gerarUsuarioDTO.Senha)
+                .Include(a => a.Usuario)
+                .First();
+            }catch{
+                return NotFound(gerarUsuarioDTO);
+            }
+            
+            
+            if(contaReal == null){
+                return NotFound(gerarUsuarioDTO);
+            }
 
-            context.Usuarios!.Add(usuario);
+            if (contaReal.Usuario != null){
+                return Conflict("Conta já possui usuário");
+            }
+
+            contaReal.Usuario = usuario;
+
+            context.Contas!.Update(contaReal);
             context.SaveChanges();
-            return Created($"/{usuario.ID}", usuario);
+            return Created($"/{contaReal}", contaReal);
         }
 
         [HttpPut("/usuarios")]

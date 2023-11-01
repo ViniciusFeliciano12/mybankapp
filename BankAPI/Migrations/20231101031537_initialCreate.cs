@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BankAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,20 +27,17 @@ namespace BankAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Usuarios",
+                name: "Contas",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ChavePIX = table.Column<string>(type: "TEXT", nullable: true),
-                    Nome = table.Column<string>(type: "TEXT", nullable: true),
-                    Sobrenome = table.Column<string>(type: "TEXT", nullable: true),
-                    Dinheiro = table.Column<float>(type: "REAL", nullable: true),
-                    CartaoID = table.Column<int>(type: "INTEGER", nullable: true)
+                    NomeUsuario = table.Column<string>(type: "TEXT", nullable: true),
+                    Senha = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Usuarios", x => x.ID);
+                    table.PrimaryKey("PK_Contas", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,23 +61,36 @@ namespace BankAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Contas",
+                name: "Usuarios",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Seila = table.Column<string>(type: "TEXT", nullable: true),
-                    Senha = table.Column<string>(type: "TEXT", nullable: true),
-                    UsuarioID = table.Column<int>(type: "INTEGER", nullable: true)
+                    ID = table.Column<int>(type: "INTEGER", nullable: false),
+                    ChavePIX = table.Column<string>(type: "TEXT", nullable: true),
+                    Nome = table.Column<string>(type: "TEXT", nullable: true),
+                    Sobrenome = table.Column<string>(type: "TEXT", nullable: true),
+                    Dinheiro = table.Column<float>(type: "REAL", nullable: true),
+                    CartaoID = table.Column<int>(type: "INTEGER", nullable: true),
+                    ContaID = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Contas", x => x.ID);
+                    table.PrimaryKey("PK_Usuarios", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Contas_Usuarios_UsuarioID",
-                        column: x => x.UsuarioID,
-                        principalTable: "Usuarios",
+                        name: "FK_Usuarios_Cartoes_CartaoID",
+                        column: x => x.CartaoID,
+                        principalTable: "Cartoes",
                         principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_Usuarios_Contas_ContaID",
+                        column: x => x.ContaID,
+                        principalTable: "Contas",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_Usuarios_Contas_ID",
+                        column: x => x.ID,
+                        principalTable: "Contas",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -105,11 +115,6 @@ namespace BankAPI.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contas_UsuarioID",
-                table: "Contas",
-                column: "UsuarioID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Faturas_CartaoModelID",
                 table: "Faturas",
                 column: "CartaoModelID");
@@ -118,14 +123,21 @@ namespace BankAPI.Migrations
                 name: "IX_Transacoes_FaturaModelID",
                 table: "Transacoes",
                 column: "FaturaModelID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_CartaoID",
+                table: "Usuarios",
+                column: "CartaoID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_ContaID",
+                table: "Usuarios",
+                column: "ContaID");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Contas");
-
             migrationBuilder.DropTable(
                 name: "Transacoes");
 
@@ -134,6 +146,9 @@ namespace BankAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Faturas");
+
+            migrationBuilder.DropTable(
+                name: "Contas");
 
             migrationBuilder.DropTable(
                 name: "Cartoes");

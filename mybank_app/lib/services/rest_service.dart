@@ -82,6 +82,38 @@ class RestService extends IRestService {
     }
   }
 
+  Future<ResponseDTO> createUserAsync(
+      String pix, String nome, String sobrenome) async {
+    Map<String, String> data = {
+      'id': usuario!.id.toString(),
+      'nomeUsuario': usuario!.username,
+      'senha': usuario!.password,
+      'chavePIX': pix,
+      'nome': nome,
+      'sobrenome': sobrenome
+    };
+
+    try {
+      var response = await http.post(
+        Uri.parse("$apiEndpoint/gerarUsuarioAsync"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(data),
+      );
+
+      if (response.statusCode == 201) {
+        return ResponseDTO(success: true);
+      } else {
+        debugPrint('Erro: ${response.body}');
+        return ResponseDTO(success: false, message: response.body);
+      }
+    } catch (exception) {
+      debugPrint('Exceção: $exception');
+      return ResponseDTO(success: false, message: exception.toString());
+    }
+  }
+
   @override
   LoggedUserDto? getLoggedInfo() {
     return usuario;

@@ -38,6 +38,35 @@ class _MyHomePageState extends State<MyHomePage> {
       child: BlocBuilder<HomePageBloc, HomePageState>(
         bloc: bloc,
         builder: (context, state) {
+          if (state is HomePageInitialState) {
+            return Container();
+          }
+
+          if (state is ValidUserState) {
+            return Container();
+          }
+
+          if (state is NoValidUserState) {
+            return Center(
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text("Usuário não criado. Gere um abaixo:"),
+                const SizedBox(height: 50),
+                ElevatedButton(
+                    onPressed: () {
+                      bloc.add(CreateUserEvent(
+                          context: context,
+                          nome: "shiro",
+                          pix: "",
+                          sobrenome: "azaoi"));
+                    },
+                    child: const Text("Gerar conta bancária")),
+              ],
+            ));
+          }
+
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -54,8 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawerEnableOpenDragGesture: true,
-      drawerEdgeDragWidth: 50,
-      drawer: NavDrawer(index: 0),
+      drawerEdgeDragWidth: 150,
+      drawer: const NavDrawer(index: 0),
       appBar: AppBar(
         title: const Text("Home page"),
       ),

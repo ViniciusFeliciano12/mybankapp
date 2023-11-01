@@ -5,5 +5,7 @@ abstract class IRestService {
   //login and register
   Future<ResponseDTO> loginAsync(String user, String password);
   Future<ResponseDTO> registerAsync(String user, String password);
+  Future<ResponseDTO> createUserAsync(
+      String pix, String nome, String sobrenome);
   LoggedUserDto? getLoggedInfo();
 }

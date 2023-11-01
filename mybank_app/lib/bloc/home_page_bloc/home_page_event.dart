@@ -10,8 +10,14 @@ class VerifyUserEvent extends HomePageEvent {
   VerifyUserEvent({required this.context, this.user});
 }
 
-class GoToRegisterEvent extends HomePageEvent {
+class CreateUserEvent extends HomePageEvent {
   BuildContext context;
-
-  GoToRegisterEvent({required this.context});
+  String pix;
+  String nome;
+  String sobrenome;
+  CreateUserEvent(
+      {required this.context,
+      required this.pix,
+      required this.nome,
+      required this.sobrenome});
 }

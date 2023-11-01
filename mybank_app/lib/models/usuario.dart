@@ -15,8 +15,8 @@ class Usuario {
   factory Usuario.fromJson(Map<String, dynamic> json) {
     return Usuario(
       id: json['id'] as int,
-      chavePIX: json['nomeUsuario'] as String,
-      nome: json['senha'] as String,
+      chavePIX: json['chavePIX'] as String,
+      nome: json['nome'] as String,
       sobrenome: json['sobrenome'] as String,
       dinheiro: json['dinheiro'] as int,
     );

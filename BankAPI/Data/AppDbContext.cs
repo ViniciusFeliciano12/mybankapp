@@ -16,8 +16,13 @@ namespace BankAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+             modelBuilder.Entity<ContaModel>()
+            .HasOne(c => c.Usuario)        
+            .WithOne()         
+            .HasForeignKey<UsuarioModel>(u => u.ID)
+            .OnDelete(DeleteBehavior.Cascade);
             
+             base.OnModelCreating(modelBuilder);
         }
     }
 }
