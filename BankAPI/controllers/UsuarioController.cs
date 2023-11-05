@@ -44,7 +44,18 @@ namespace Events.API.Controllers
                 Dinheiro = 0,
                 Cartao = null,
             };
-            usuario.ChavePIX = string.IsNullOrEmpty(gerarUsuarioDTO.ChavePIX) ? usuario.GerarChavePix(10) : gerarUsuarioDTO.ChavePIX;
+            bool pixKeyUtilized = false;
+            foreach(var items in model){
+                if (items.ChavePIX == gerarUsuarioDTO.ChavePIX){
+                    pixKeyUtilized = true;
+                }
+            }
+            if (pixKeyUtilized || string.IsNullOrEmpty(gerarUsuarioDTO.ChavePIX)){
+                usuario.ChavePIX = usuario.GerarChavePix(10);
+            }
+            else{
+                usuario.ChavePIX = gerarUsuarioDTO.ChavePIX;
+            }
             ContaModel? contaReal;
             try{
                 contaReal = context.Contas!

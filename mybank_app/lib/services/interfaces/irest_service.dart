@@ -1,7 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:mybank_app/models/logged_user_dto.dart';
 import 'package:mybank_app/models/response_dto.dart';
 
-abstract class IRestService {
+abstract class IRestService extends ChangeNotifier {
   //login and register
   Future<ResponseDTO> loginAsync(String user, String password);
   Future<ResponseDTO> registerAsync(String user, String password);

@@ -1,8 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mybank_app/bloc/home_page_bloc/home_page_event.dart';
-import 'package:mybank_app/bloc/home_page_bloc/home_page_state.dart';
+import 'package:mybank_app/bloc/home_page/home_page_event.dart';
+import 'package:mybank_app/bloc/home_page/home_page_state.dart';
 
 import '../../services/interfaces/irest_service.dart';
 import '../../services/service_locator.dart';
@@ -40,6 +41,9 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         }
 
         if (response.success) {
+          Navigator.of(event.context).pop();
+          singleResponseMessage(
+              event.context, "Sucesso!", "Usuário criado com sucesso.");
           emit(ValidUserState());
         } else {
           emit(NoValidUserState());

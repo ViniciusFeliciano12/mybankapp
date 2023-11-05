@@ -37,9 +37,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           if (response.success) {
             emit(LoginInitialState());
             navigateWithSlideTransition(
-              event.context,
-              const MyHomePage(),
-            );
+                event.context, const MyHomePage(), false);
           } else {
             emit(LoginInitialState());
             singleResponseMessage(event.context, "Erro", response.message!);
@@ -52,10 +50,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     );
 
     on<GoToRegisterEvent>((event, emit) async {
-      navigateWithSlideTransition(
-        event.context,
-        const RegisterPage(),
-      );
+      navigateWithSlideTransition(event.context, const RegisterPage(), false);
     });
   }
 }

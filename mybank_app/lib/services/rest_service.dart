@@ -82,6 +82,7 @@ class RestService extends IRestService {
     }
   }
 
+  @override
   Future<ResponseDTO> createUserAsync(
       String pix, String nome, String sobrenome) async {
     Map<String, String> data = {
@@ -103,6 +104,9 @@ class RestService extends IRestService {
       );
 
       if (response.statusCode == 201) {
+        final dynamic jsonResponse = jsonDecode(response.body);
+        usuario = LoggedUserDto.fromJson(jsonResponse);
+        notifyListeners();
         return ResponseDTO(success: true);
       } else {
         debugPrint('Erro: ${response.body}');

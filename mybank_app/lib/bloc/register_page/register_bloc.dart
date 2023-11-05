@@ -43,6 +43,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           if (response.success) {
             emit(RegisterInitialState());
             Navigator.pop(event.context);
+            singleResponseMessage(
+                event.context, "Sucesso!", "Conta criada com sucesso.");
             return;
           } else {
             singleResponseMessage(event.context, "Erro", response.message!);
