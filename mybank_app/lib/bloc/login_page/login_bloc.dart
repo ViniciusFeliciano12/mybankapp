@@ -34,12 +34,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             return;
           }
 
+          emit(LoginInitialState());
           if (response.success) {
-            emit(LoginInitialState());
             navigateWithSlideTransition(
                 event.context, const MyHomePage(), false);
           } else {
-            emit(LoginInitialState());
             singleResponseMessage(event.context, "Erro", response.message!);
           }
         } catch (error) {

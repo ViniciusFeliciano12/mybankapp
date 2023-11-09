@@ -62,22 +62,35 @@ namespace Events.API.Controllers
             return Created($"/{conta.ID}", conta);
         }
         
-        [HttpPut("/contas")]
-        public IActionResult Put( 
-        [FromBody] ContaModel contaModel,
+        [HttpPut("/editAccountAsync")]
+        public IActionResult EditAccountAsync( 
+        [FromBody] EditContaDTO contaModel,
         [FromServices] AppDbContext context){
-            var model = context.Contas!.FirstOrDefault(x => x.ID == contaModel.ID);
-                if (model == null){
-                    return NotFound();
+            var model = context.Contas!.Include(a => a.Usuario).FirstOrDefault(x => x.ID == contaModel.Id);
+            if (model == null){
+                return NotFound();
+            }
+
+            if (model.Senha != contaModel.Password){
+                return Conflict("Senha informada não corresponde com a atual.");
+            }
+
+            try{
+                var item = context.Contas!.First(x => x.NomeUsuario == contaModel.Name);
+                if (item != null && item.ID != contaModel.Id){
+                    return Conflict("Já existe usuário com esse username.");
                 }
+            }catch{
+            }
 
-                model.NomeUsuario = contaModel.NomeUsuario;
-                model.Senha = contaModel.Senha;
-                model.Usuario = contaModel.Usuario;
+            model.NomeUsuario = contaModel.Name;
+            if (!String.IsNullOrEmpty(contaModel.NewPassword) && !String.IsNullOrWhiteSpace(contaModel.NewPassword)){
+                model.Senha = contaModel.NewPassword;
+            }
 
-                context.Contas!.Update(model);
-                context.SaveChanges();
-                return Ok(model);
+            context.Contas!.Update(model);
+            context.SaveChanges();
+            return Ok(model);
         }
 
         [HttpDelete("/contas/{id:int}")] 

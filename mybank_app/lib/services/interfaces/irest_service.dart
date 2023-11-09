@@ -8,5 +8,9 @@ abstract class IRestService extends ChangeNotifier {
   Future<ResponseDTO> registerAsync(String user, String password);
   Future<ResponseDTO> createUserAsync(
       String pix, String nome, String sobrenome);
+  Future<ResponseDTO> editAccountAsync(
+      String nomeUsuario, String senha, String novaSenha);
+  Future<ResponseDTO> editUserAsync(
+      String nome, String sobrenome, String senha);
   LoggedUserDto? getLoggedInfo();
 }

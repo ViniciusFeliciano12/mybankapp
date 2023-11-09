@@ -2,15 +2,15 @@ import 'package:flutter/widgets.dart';
 
 import '../../models/logged_user_dto.dart';
 
-abstract class ProfileEvent {}
+abstract class PixEvent {}
 
-class InitPageEvent extends ProfileEvent {
+class InitPageEvent extends PixEvent {
   BuildContext context;
   LoggedUserDto? usuario;
   InitPageEvent({required this.context, required this.usuario});
 }
 
-class EditAccountEvent extends ProfileEvent {
+class EditAccountEvent extends PixEvent {
   BuildContext context;
   String password;
   String username;
@@ -24,7 +24,7 @@ class EditAccountEvent extends ProfileEvent {
       required this.confirmNewPassword});
 }
 
-class EditUserEvent extends ProfileEvent {
+class EditUserEvent extends PixEvent {
   BuildContext context;
   String name;
   String secondName;

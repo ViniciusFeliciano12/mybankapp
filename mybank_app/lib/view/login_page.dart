@@ -19,6 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   final userController = TextEditingController();
   final passwordController = TextEditingController();
   bool passwordObscure = true;
+  IconData icon = Icons.remove_red_eye_outlined;
 
   late final LoginBloc bloc;
 
@@ -61,70 +62,96 @@ class _LoginPageState extends State<LoginPage> {
 
   Padding loginInitial(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 200, left: 50),
-      child: SizedBox(
-        height: 260,
-        width: 250,
-        child: Column(
-          children: <Widget>[
-            const Padding(
-              padding: EdgeInsets.only(right: 50),
-              child: Text('Usuário '),
-            ),
-            const SizedBox(height: 3),
-            Padding(
-              padding: const EdgeInsets.only(right: 50),
-              child: TextField(
-                controller: userController,
+      padding: const EdgeInsets.only(top: 200, left: 50, right: 50),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          TextField(
+            onTapOutside: (event) {
+              FocusScope.of(context).unfocus();
+            },
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(30),
+                ),
               ),
+              labelText: 'Usuário',
             ),
-            const SizedBox(height: 19),
-            const Padding(
-              padding: EdgeInsets.only(right: 50),
-              child: Text('Senha: '),
+            controller: userController,
+          ),
+          const SizedBox(height: 19),
+          TextField(
+            onTapOutside: (event) {
+              FocusScope.of(context).unfocus();
+            },
+            decoration: InputDecoration(
+              suffixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      passwordObscure = !passwordObscure;
+                      if (icon == Icons.remove_red_eye_outlined) {
+                        setState(() {
+                          icon = Icons.remove_red_eye_rounded;
+                        });
+                      } else {
+                        setState(() {
+                          icon = Icons.remove_red_eye_outlined;
+                        });
+                      }
+                    });
+                  },
+                  icon: Icon(icon)),
+              border: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(30)),
+              ),
+              labelText: 'Senha',
             ),
-            const SizedBox(height: 3),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: passwordController,
-                    obscureText: passwordObscure,
+            controller: passwordController,
+            obscureText: passwordObscure,
+          ),
+          const SizedBox(height: 100),
+          ElevatedButton(
+              style: const ButtonStyle(
+                shape: MaterialStatePropertyAll(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
                   ),
                 ),
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        passwordObscure = !passwordObscure;
-                      });
-                    },
-                    icon: const Icon(Icons.remove_red_eye_outlined))
-              ],
-            ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.only(right: 50),
-              child: ElevatedButton(
-                  onPressed: () {
-                    bloc.add(TryLoginEvent(
-                        context: context,
-                        username: userController.text,
-                        password: passwordController.text));
-                    userController.clear();
-                    passwordController.clear();
-                  },
-                  child: const Text('Login')),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 50),
-              child: ElevatedButton(
-                  onPressed: () {
-                    bloc.add(GoToRegisterEvent(context: context));
-                  },
-                  child: const Text('Register')),
-            ),
-          ],
-        ),
+              ),
+              onPressed: () {
+                bloc.add(TryLoginEvent(
+                    context: context,
+                    username: userController.text,
+                    password: passwordController.text));
+                userController.clear();
+                passwordController.clear();
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Text('Login'),
+              )),
+          const SizedBox(height: 5),
+          ElevatedButton(
+              style: const ButtonStyle(
+                shape: MaterialStatePropertyAll(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                  ),
+                ),
+              ),
+              onPressed: () {
+                bloc.add(GoToRegisterEvent(context: context));
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Text('Register'),
+              )),
+        ],
       ),
     );
   }

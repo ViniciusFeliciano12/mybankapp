@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mybank_app/utils/navigation.dart';
 import 'package:mybank_app/view/home_page.dart';
+import 'package:mybank_app/view/pix_page.dart';
 import 'package:mybank_app/view/profile_page.dart';
 
 import '../services/interfaces/irest_service.dart';
@@ -80,9 +81,13 @@ class _NavDrawerState extends State<NavDrawer> {
             ),
           if (hasAccount)
             ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Settings'),
-              onTap: () => {Navigator.of(context).pop()},
+              leading: const Icon(Icons.money),
+              title: const Text('Pix'),
+              onTap: () {
+                if (widget.index != 2) {
+                  navigateWithSlideTransition(context, const PixPage(), true);
+                }
+              },
             ),
           if (hasAccount)
             ListTile(

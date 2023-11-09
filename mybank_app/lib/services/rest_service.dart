@@ -119,6 +119,75 @@ class RestService extends IRestService {
   }
 
   @override
+  Future<ResponseDTO> editAccountAsync(
+      String nomeUsuario, String senha, String novaSenha) async {
+    Map<String, String> data = {
+      'id': usuario!.id.toString(),
+      'name': nomeUsuario,
+      'password': senha,
+      'newPassword': novaSenha,
+    };
+
+    try {
+      var response = await http.put(
+        Uri.parse("$apiEndpoint/editAccountAsync"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(data),
+      );
+
+      if (response.statusCode == 200) {
+        final dynamic jsonResponse = jsonDecode(response.body);
+        usuario = LoggedUserDto.fromJson(jsonResponse);
+        notifyListeners();
+        return ResponseDTO(success: true);
+      } else {
+        debugPrint('Erro: ${response.body}');
+        return ResponseDTO(success: false, message: response.body);
+      }
+    } catch (exception) {
+      debugPrint('Exceção: $exception');
+      return ResponseDTO(success: false, message: exception.toString());
+    }
+  }
+
+  @override
+  Future<ResponseDTO> editUserAsync(
+      String nome, String sobrenome, String senha) async {
+    Map<String, String> data = {
+      'idUser': usuario!.usuario!.id.toString(),
+      'idAccount': usuario!.id.toString(),
+      'name': nome,
+      'sobrenome': sobrenome,
+      'password': senha,
+    };
+
+    try {
+      var response = await http.put(
+        Uri.parse("$apiEndpoint/editUserAsync"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(data),
+      );
+
+      if (response.statusCode == 200) {
+        final dynamic jsonResponse = jsonDecode(response.body);
+        usuario = LoggedUserDto.fromJson(jsonResponse);
+        notifyListeners();
+        return ResponseDTO(success: true);
+      } else {
+        debugPrint('Erro: ${response.body}');
+        return ResponseDTO(success: false, message: response.body);
+      }
+    } catch (exception) {
+      debugPrint('Exceção: $exception');
+      return ResponseDTO(success: false, message: exception.toString());
+    }
+  }
+
+  @override
   LoggedUserDto? getLoggedInfo() {
     return usuario;
   }

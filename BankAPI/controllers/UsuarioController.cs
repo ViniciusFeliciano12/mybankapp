@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using BankAPI.DTO;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
+using MyBank.DTO;
 
 namespace Events.API.Controllers
 {
@@ -82,24 +83,33 @@ namespace Events.API.Controllers
             return Created($"/{contaReal}", contaReal);
         }
 
-        [HttpPut("/usuarios")]
-        public IActionResult Put( 
-        [FromBody] UsuarioModel usuarioModel,
+        [HttpPut("/editUserAsync")]
+        public IActionResult EditUserAsync( 
+        [FromBody] EditUserDTO usuarioModel,
         [FromServices] AppDbContext context){
-            var model = context.Usuarios!.FirstOrDefault(x => x.ID == usuarioModel.ID);
-                if (model == null){
-                    return NotFound();
-                }
+            var model = context.Usuarios!.FirstOrDefault(x => x.ID == usuarioModel.IdUser);
+            var account = context.Contas!.Include(a => a.Usuario).FirstOrDefault(x => x.ID == usuarioModel.IdAccount);
 
-                model.Cartao = usuarioModel.Cartao;
-                model.ChavePIX = usuarioModel.ChavePIX;
-                model.Dinheiro = usuarioModel.Dinheiro;
-                model.Nome = usuarioModel.Nome;
-                model.Sobrenome = usuarioModel.Sobrenome;
+            if (model == null || account == null){
+                return NotFound();
+            }
+            if (account.Usuario!.ID != usuarioModel.IdUser){
+                return Conflict("ID do usuário enviado não confere com o ID de usuário associado ao ID da conta.");
+            }
 
-                context.Usuarios!.Update(model);
-                context.SaveChanges();
-                return Ok(model);
+            if (account.Senha != usuarioModel.Password){
+                return Conflict("Senha informada não confere com a senha da conta.");
+            }
+
+            model.Nome = usuarioModel.Name;
+            model.Sobrenome = usuarioModel.Sobrenome;
+
+            account.Usuario.Sobrenome = usuarioModel.Sobrenome;
+            account.Usuario.Nome = usuarioModel.Name;
+
+            context.Usuarios!.Update(model);
+            context.SaveChanges();
+            return Ok(account);
         }
 
         [HttpDelete("/usuarios/{id:int}")] 

@@ -19,6 +19,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final passwordConfirmController = TextEditingController();
   bool passwordObscure = true;
   bool passwordConfirmObscure = true;
+  IconData userIcon = Icons.remove_red_eye_outlined;
+  IconData passwordIcon = Icons.remove_red_eye_outlined;
+  IconData confirmPasswordIcon = Icons.remove_red_eye_outlined;
 
   late final RegisterBloc bloc;
 
@@ -61,87 +64,108 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Padding registerInitial(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 200, left: 50),
-      child: SizedBox(
-        height: 400,
-        width: 250,
-        child: Column(
-          children: <Widget>[
-            const Padding(
-              padding: EdgeInsets.only(right: 50),
-              child: Text('Usuário: '),
-            ),
-            const SizedBox(height: 3),
-            Padding(
-              padding: const EdgeInsets.only(right: 50),
-              child: TextField(
-                controller: userController,
+      padding: const EdgeInsets.only(top: 200, left: 50, right: 50),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          TextField(
+            onTapOutside: (event) {
+              FocusScope.of(context).unfocus();
+            },
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(30)),
               ),
+              labelText: 'Usuário',
             ),
-            const SizedBox(height: 19),
-            const Padding(
-              padding: EdgeInsets.only(right: 50),
-              child: Text('Senha: '),
-            ),
-            const SizedBox(height: 3),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: passwordController,
-                    obscureText: passwordObscure,
-                  ),
-                ),
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        passwordObscure = !passwordObscure;
-                      });
-                    },
-                    icon: const Icon(Icons.remove_red_eye_outlined))
-              ],
-            ),
-            const SizedBox(height: 19),
-            const Padding(
-              padding: EdgeInsets.only(right: 50),
-              child: Text('Confirme a senha: '),
-            ),
-            const SizedBox(height: 3),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: passwordConfirmController,
-                    obscureText: passwordConfirmObscure,
-                  ),
-                ),
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        passwordConfirmObscure = !passwordConfirmObscure;
-                      });
-                    },
-                    icon: const Icon(Icons.remove_red_eye_outlined))
-              ],
-            ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.only(right: 50),
-              child: ElevatedButton(
-                  onPressed: () async {
-                    bloc.add(TryRegisterEvent(
-                        context: context,
-                        username: userController.text,
-                        password: passwordController.text,
-                        confirmPassword: passwordConfirmController.text));
-                    userController.clear();
-                    passwordController.clear();
-                    passwordConfirmController.clear();
+            controller: userController,
+          ),
+          const SizedBox(height: 10),
+          TextField(
+            onTapOutside: (event) {
+              FocusScope.of(context).unfocus();
+            },
+            decoration: InputDecoration(
+              suffixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      passwordObscure = !passwordObscure;
+                      if (passwordIcon == Icons.remove_red_eye_outlined) {
+                        setState(() {
+                          passwordIcon = Icons.remove_red_eye_rounded;
+                        });
+                      } else {
+                        setState(() {
+                          passwordIcon = Icons.remove_red_eye_outlined;
+                        });
+                      }
+                    });
                   },
-                  child: const Text('Registrar')),
+                  icon: Icon(passwordIcon)),
+              border: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(30)),
+              ),
+              labelText: 'Senha',
             ),
-          ],
-        ),
+            controller: passwordController,
+            obscureText: passwordObscure,
+          ),
+          const SizedBox(height: 10),
+          TextField(
+            onTapOutside: (event) {
+              FocusScope.of(context).unfocus();
+            },
+            decoration: InputDecoration(
+              suffixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      passwordObscure = !passwordObscure;
+                      if (userIcon == Icons.remove_red_eye_outlined) {
+                        setState(() {
+                          userIcon = Icons.remove_red_eye_rounded;
+                        });
+                      } else {
+                        setState(() {
+                          userIcon = Icons.remove_red_eye_outlined;
+                        });
+                      }
+                    });
+                  },
+                  icon: Icon(userIcon)),
+              border: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(30)),
+              ),
+              labelText: 'Confirmar senha',
+            ),
+            controller: passwordConfirmController,
+            obscureText: passwordConfirmObscure,
+          ),
+          const SizedBox(height: 100),
+          ElevatedButton(
+              style: const ButtonStyle(
+                shape: MaterialStatePropertyAll(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                  ),
+                ),
+              ),
+              onPressed: () async {
+                bloc.add(TryRegisterEvent(
+                    context: context,
+                    username: userController.text,
+                    password: passwordController.text,
+                    confirmPassword: passwordConfirmController.text));
+                userController.clear();
+                passwordController.clear();
+                passwordConfirmController.clear();
+              },
+              child: const Padding(
+                padding: EdgeInsets.all(12.0),
+                child: Text('Registrar'),
+              )),
+        ],
       ),
     );
   }

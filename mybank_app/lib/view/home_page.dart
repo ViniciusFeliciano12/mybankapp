@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:mybank_app/bloc/home_page/home_page_bloc.dart';
 import 'package:mybank_app/bloc/home_page/home_page_event.dart';
 import 'package:mybank_app/bloc/home_page/home_page_state.dart';
@@ -47,6 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Center _body() {
+    NumberFormat formatter = NumberFormat("0,000,000");
     return Center(
       child: BlocBuilder<HomePageBloc, HomePageState>(
         bloc: bloc,
@@ -73,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 20,
                     ),
                     Text(
-                        "Dinheiro na conta: ${usuario?.usuario?.dinheiro} reais")
+                        "Dinheiro na conta: ${formatter.format(usuario?.usuario?.dinheiro)} reais"),
                   ],
                 ),
               ),
