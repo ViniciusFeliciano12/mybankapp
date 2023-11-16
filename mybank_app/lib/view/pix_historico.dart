@@ -33,41 +33,86 @@ class _PixHistoricoPageState extends State<PixHistoricoPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Text("Transações feitas:"),
+                const Padding(
+                  padding: EdgeInsets.only(left: 15.0, top: 15.0),
+                  child: Text("Transações feitas",
+                      style: TextStyle(
+                          color: Colors.teal,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold)),
+                ),
                 const SizedBox(height: 20),
+                Container(
+                  height: 1,
+                  color: Colors.teal,
+                ),
                 ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: teste.length,
                     itemBuilder: (context, index) {
                       return teste[index].pagante
                           ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text("De: ${teste[index].nomePagante}"),
-                                Text("Para: ${teste[index].nomeRecebinte}"),
-                                Text("Valor: ${teste[index].valor}"),
-                                const SizedBox(height: 10),
+                                Container(
+                                  height: 1,
+                                  color: Colors.teal,
+                                ),
+                                ListTile(
+                                  tileColor:
+                                      const Color.fromARGB(255, 240, 239, 239),
+                                  title:
+                                      Text("De: ${teste[index].nomePagante}"),
+                                  subtitle: Text(
+                                      "Para: ${teste[index].nomeRecebinte}"),
+                                  trailing:
+                                      Text("Valor: ${teste[index].valor}"),
+                                ),
                               ],
                             )
                           : Container();
                     }),
-                const Text("Transações recebidas"),
+                Container(
+                  height: 2,
+                  color: Colors.teal,
+                ),
+                const SizedBox(height: 15),
+                const Padding(
+                  padding: EdgeInsets.only(left: 16.0),
+                  child: Text("Transações recebidas",
+                      style: TextStyle(
+                          color: Colors.teal,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold)),
+                ),
                 const SizedBox(height: 20),
+                Container(
+                  height: 1,
+                  color: Colors.teal,
+                ),
                 ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: teste.length,
                     itemBuilder: (context, index) {
                       return teste[index].pagante
                           ? Container()
                           : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text("De: ${teste[index].nomePagante}"),
-                                Text("Para: ${teste[index].nomeRecebinte}"),
-                                Text("Valor: ${teste[index].valor}"),
-                                const SizedBox(height: 10),
+                                Container(
+                                  height: 1,
+                                  color: Colors.teal,
+                                ),
+                                ListTile(
+                                  tileColor:
+                                      const Color.fromARGB(255, 240, 239, 239),
+                                  title:
+                                      Text("De: ${teste[index].nomePagante}"),
+                                  subtitle: Text(
+                                      "Para: ${teste[index].nomeRecebinte}"),
+                                  trailing:
+                                      Text("Valor: ${teste[index].valor}"),
+                                ),
                               ],
                             );
                     }),

@@ -55,12 +55,12 @@ class _NavDrawerState extends State<NavDrawer> {
           const SizedBox(height: 55),
           const Center(
             child: Text(
-              'Side menu',
-              style: TextStyle(color: Colors.black, fontSize: 25),
+              'My bank app',
+              style: TextStyle(color: Colors.teal, fontSize: 25),
             ),
           ),
           ListTile(
-            leading: const Icon(Icons.input),
+            leading: const Icon(Icons.input, color: Colors.teal),
             title: const Text('Home page'),
             onTap: () {
               if (widget.index != 0) {
@@ -70,7 +70,7 @@ class _NavDrawerState extends State<NavDrawer> {
           ),
           if (hasAccount)
             ListTile(
-              leading: const Icon(Icons.verified_user),
+              leading: const Icon(Icons.verified_user, color: Colors.teal),
               title: const Text('Profile'),
               onTap: () {
                 if (widget.index != 1) {
@@ -81,7 +81,7 @@ class _NavDrawerState extends State<NavDrawer> {
             ),
           if (hasAccount)
             ListTile(
-              leading: const Icon(Icons.money),
+              leading: const Icon(Icons.money, color: Colors.teal),
               title: const Text('Pix'),
               onTap: () {
                 if (widget.index != 2) {
@@ -91,12 +91,15 @@ class _NavDrawerState extends State<NavDrawer> {
             ),
           if (hasAccount)
             ListTile(
-              leading: const Icon(Icons.border_color),
+              leading: const Icon(
+                Icons.border_color,
+                color: Colors.teal,
+              ),
               title: const Text('Feedback'),
               onTap: () => {Navigator.of(context).pop()},
             ),
           ListTile(
-            leading: const Icon(Icons.exit_to_app),
+            leading: const Icon(Icons.exit_to_app, color: Colors.teal),
             title: const Text('Logout'),
             onTap: () {
               Navigator.of(context).pop();

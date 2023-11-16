@@ -85,6 +85,12 @@ namespace Events.API.Controllers
 
             var model = context.Usuarios!.FirstOrDefault(x => x.ID == pixModel.IdUser);
             var account = context.Contas!.Include(a => a.Usuario).FirstOrDefault(x => x.ID == pixModel.IdAccount);
+            try{
+                var exists = context.Usuarios!.First(a => a.ChavePIX == pixModel.ChavePIX);
+                return Conflict("Chave PIX já cadastrada.");
+            }catch{
+
+            }
 
             if (model == null || account == null){
                 return NotFound();
