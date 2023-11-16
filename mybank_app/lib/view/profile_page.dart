@@ -72,7 +72,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   ListTile(
                       tileColor: const Color.fromARGB(255, 240, 239, 239),
-                      contentPadding: const EdgeInsets.all(8),
+                      contentPadding:
+                          const EdgeInsets.only(top: 8, left: 14, bottom: 8),
                       leading: const Icon(
                           color: Colors.teal, Icons.app_registration_outlined),
                       title: Text("Login da conta: ${usuario!.username}")),
@@ -82,22 +83,12 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   ListTile(
                       tileColor: const Color.fromARGB(255, 240, 239, 239),
-                      contentPadding: const EdgeInsets.all(8),
+                      contentPadding:
+                          const EdgeInsets.only(top: 8, left: 14, bottom: 8),
                       leading: const Icon(
                           color: Colors.teal, Icons.add_to_home_screen_rounded),
                       title: Text(
                           "Nome de usuário: ${usuario!.usuario!.nome} ${usuario!.usuario!.sobrenome}")),
-                  Container(
-                    height: 1,
-                    color: Colors.grey,
-                  ),
-                  ListTile(
-                      tileColor: const Color.fromARGB(255, 240, 239, 239),
-                      contentPadding: const EdgeInsets.all(8),
-                      leading:
-                          const Icon(color: Colors.teal, Icons.pix_rounded),
-                      title: Text(
-                          "PIX de usuário: ${usuario!.usuario!.nome} ${usuario!.usuario!.sobrenome}")),
                   Container(
                     height: 1,
                     color: Colors.grey,
@@ -172,14 +163,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             );
           }
-
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(usuario == null ? "null" : usuario?.username ?? "null"),
-              Text(usuario == null ? "null" : usuario?.password ?? "null"),
-            ],
-          );
+          return Container();
         },
       ),
     );
@@ -212,7 +196,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
               content: Container(
                 width: 600,
-                height: 250,
+                height: 300,
                 color: Colors.white,
                 child: SingleChildScrollView(
                   child: Column(

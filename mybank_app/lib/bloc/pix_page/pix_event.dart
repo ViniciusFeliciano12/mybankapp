@@ -10,29 +10,41 @@ class InitPageEvent extends PixEvent {
   InitPageEvent({required this.context, required this.usuario});
 }
 
-class EditAccountEvent extends PixEvent {
+class EditPixKeyEvent extends PixEvent {
   BuildContext context;
+  String pixKey;
   String password;
-  String username;
-  String newPassword;
-  String confirmNewPassword;
-  EditAccountEvent(
-      {required this.context,
-      required this.username,
-      required this.password,
-      required this.newPassword,
-      required this.confirmNewPassword});
+  EditPixKeyEvent({
+    required this.context,
+    required this.pixKey,
+    required this.password,
+  });
 }
 
-class EditUserEvent extends PixEvent {
-  BuildContext context;
-  String name;
-  String secondName;
-  String password;
+class GoToSendPixPageEvent extends PixEvent {
+  GoToSendPixPageEvent();
+}
 
-  EditUserEvent(
+class SendPixEvent extends PixEvent {
+  BuildContext context;
+  String pixKey;
+  String password;
+  String valor;
+  SendPixEvent(
       {required this.context,
-      required this.name,
-      required this.secondName,
-      required this.password});
+      required this.pixKey,
+      required this.password,
+      required this.valor});
+}
+
+class ConfirmPixEvent extends PixEvent {
+  BuildContext context;
+  String password;
+  String pixKey;
+  String valor;
+  ConfirmPixEvent(
+      {required this.context,
+      required this.pixKey,
+      required this.password,
+      required this.valor});
 }

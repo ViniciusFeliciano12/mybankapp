@@ -11,6 +11,8 @@ namespace BankAPI.Data
         public DbSet<TransacaoModel>? Transacoes { get; set; }
         public DbSet<UsuarioModel>? Usuarios { get; set; }
 
+        public DbSet<PixModel>? Pix { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlite("DataSource=tds.db;Cache=Shared");
 
