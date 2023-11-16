@@ -29,21 +29,50 @@ class _PixHistoricoPageState extends State<PixHistoricoPage> {
         builder: (context, state) {
           if (state is PixHistoricoSuccessState) {
             var teste = state.pixHistorico;
-            return ListView.builder(
-                shrinkWrap: true,
-                itemCount: teste.length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text("De: ${teste[index].nomePagante}"),
-                      Text("Para: ${teste[index].nomeRecebinte}"),
-                      Text("Valor: ${teste[index].valor}"),
-                      const SizedBox(height: 10),
-                    ],
-                  );
-                });
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const Text("Transações feitas:"),
+                const SizedBox(height: 20),
+                ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: teste.length,
+                    itemBuilder: (context, index) {
+                      return teste[index].pagante
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text("De: ${teste[index].nomePagante}"),
+                                Text("Para: ${teste[index].nomeRecebinte}"),
+                                Text("Valor: ${teste[index].valor}"),
+                                const SizedBox(height: 10),
+                              ],
+                            )
+                          : Container();
+                    }),
+                const Text("Transações recebidas"),
+                const SizedBox(height: 20),
+                ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: teste.length,
+                    itemBuilder: (context, index) {
+                      return teste[index].pagante
+                          ? Container()
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text("De: ${teste[index].nomePagante}"),
+                                Text("Para: ${teste[index].nomeRecebinte}"),
+                                Text("Valor: ${teste[index].valor}"),
+                                const SizedBox(height: 10),
+                              ],
+                            );
+                    }),
+              ],
+            );
           }
           if (state is PixHistoricoInitialState) {
             return Text("Initial state");
