@@ -208,3 +208,5 @@ C:\github\mybankapp\bankAPI\obj\Debug\net7.0\refint\BankAPI.dll
 C:\github\mybankapp\bankAPI\obj\Debug\net7.0\BankAPI.pdb
 C:\github\mybankapp\bankAPI\obj\Debug\net7.0\BankAPI.genruntimeconfig.cache
 C:\github\mybankapp\bankAPI\obj\Debug\net7.0\ref\BankAPI.dll
+C:\repositorios_gitHub\bancoapp\BankAPI\bin\Debug\net7.0\MySqlConnector.dll
+C:\repositorios_gitHub\bancoapp\BankAPI\bin\Debug\net7.0\Pomelo.EntityFrameworkCore.MySql.dll

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "05+QTasE02M384IwJOCa60NhXV+ZRmtXnfBRT0pSVWRz4i9maI5ICg7jjPVjH3McLi6kv2/6xCnMNIjRoE+9hQ==",
+  "dgSpecHash": "cPbvpngsDx1KQAQnWRQ2u0iiPeNetDhDFo5ElG90KyIlZY8B8yLoPsJfzKCmMgD5kIinI7SpD4kdeHsJrtdOfA==",
   "success": true,
   "projectFilePath": "C:\\repositorios_gitHub\\bancoapp\\BankAPI\\BankAPI.csproj",
   "expectedPackageFiles": [
@@ -54,6 +54,8 @@
     "C:\\Nuget\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "C:\\Nuget\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Nuget\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Nuget\\mysqlconnector\\2.2.5\\mysqlconnector.2.2.5.nupkg.sha512",
+    "C:\\Nuget\\pomelo.entityframeworkcore.mysql\\7.0.0\\pomelo.entityframeworkcore.mysql.7.0.0.nupkg.sha512",
     "C:\\Nuget\\sqlitepclraw.bundle_e_sqlite3\\2.1.4\\sqlitepclraw.bundle_e_sqlite3.2.1.4.nupkg.sha512",
     "C:\\Nuget\\sqlitepclraw.core\\2.1.4\\sqlitepclraw.core.2.1.4.nupkg.sha512",
     "C:\\Nuget\\sqlitepclraw.lib.e_sqlite3\\2.1.4\\sqlitepclraw.lib.e_sqlite3.2.1.4.nupkg.sha512",
