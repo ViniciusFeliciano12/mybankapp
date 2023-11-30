@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "cPbvpngsDx1KQAQnWRQ2u0iiPeNetDhDFo5ElG90KyIlZY8B8yLoPsJfzKCmMgD5kIinI7SpD4kdeHsJrtdOfA==",
+  "dgSpecHash": "ZV7tt5Cf/r3F/+k5gllp42sM56O4LQ9CHnMf8isvy2PZ4qdkqUQ01HkrVKn48JoUYNILzYBQj1vDyE/6Q95XvQ==",
   "success": true,
   "projectFilePath": "C:\\repositorios_gitHub\\bancoapp\\BankAPI\\BankAPI.csproj",
   "expectedPackageFiles": [
@@ -27,6 +27,7 @@
     "C:\\Nuget\\microsoft.entityframeworkcore.sqlite\\7.0.12\\microsoft.entityframeworkcore.sqlite.7.0.12.nupkg.sha512",
     "C:\\Nuget\\microsoft.entityframeworkcore.sqlite.core\\7.0.12\\microsoft.entityframeworkcore.sqlite.core.7.0.12.nupkg.sha512",
     "C:\\Nuget\\microsoft.entityframeworkcore.sqlserver\\7.0.12\\microsoft.entityframeworkcore.sqlserver.7.0.12.nupkg.sha512",
+    "C:\\Nuget\\microsoft.entityframeworkcore.tools\\7.0.0\\microsoft.entityframeworkcore.tools.7.0.0.nupkg.sha512",
     "C:\\Nuget\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Nuget\\microsoft.extensions.caching.abstractions\\7.0.0\\microsoft.extensions.caching.abstractions.7.0.0.nupkg.sha512",
     "C:\\Nuget\\microsoft.extensions.caching.memory\\7.0.0\\microsoft.extensions.caching.memory.7.0.0.nupkg.sha512",

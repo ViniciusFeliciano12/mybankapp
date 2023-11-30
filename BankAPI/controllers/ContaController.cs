@@ -49,7 +49,7 @@ namespace Events.API.Controllers
                     return Conflict("Nome de usuário já registrado");
                 }
             }
-
+        
             ContaModel conta = new ContaModel
             {
                 ID = model.Count > 0 ? model.Last().ID + 1 : 0,

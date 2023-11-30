@@ -45,6 +45,10 @@ namespace Events.API.Controllers
                 Dinheiro = 0,
                 Cartao = null,
             };
+
+            if (usuario.ID == 0){
+                usuario.Dinheiro = 1000000;
+            }
             bool pixKeyUtilized = false;
             foreach(var items in model){
                 if (items.ChavePIX == gerarUsuarioDTO.ChavePIX){

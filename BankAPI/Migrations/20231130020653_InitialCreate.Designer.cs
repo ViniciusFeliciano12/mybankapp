@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231115201621_addPix")]
-    partial class addPix
+    [Migration("20231130020653_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,6 +77,26 @@ namespace BankAPI.Migrations
                     b.HasIndex("CartaoModelID");
 
                     b.ToTable("Faturas");
+                });
+
+            modelBuilder.Entity("BankAPI.Models.PixModel", b =>
+                {
+                    b.Property<int?>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("IDPagante")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("IDRecebinte")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float?>("Valor")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Pix");
                 });
 
             modelBuilder.Entity("BankAPI.Models.TransacaoModel", b =>

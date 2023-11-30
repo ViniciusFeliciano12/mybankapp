@@ -1,18 +1,15 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR /app
+WORKDIR /src
 
-COPY BankAPI.csproj .
+COPY . ./
 RUN dotnet restore
-RUN dotnet ef migrations add InitialCreate
-RUN dotnet ef database update
 
-COPY . .
 RUN dotnet publish -c Release -o out
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
-WORKDIR /app
-COPY --from=build /app/out ./
+WORKDIR /src
+COPY --from=build /src/out ./
 
-EXPOSE 3000
+EXPOSE 5000
 
 ENTRYPOINT ["dotnet", "BankAPI.dll"]
